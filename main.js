@@ -1,7 +1,6 @@
 const fs = require('fs')
 
-
-let main = function(fileName) {
+const main = function(fileName) {
     fs.readFile(fileName, 'utf8', (err, res) => {
         let [total, data] = handleData(res);
         data.sort((a, b) => a[0] - b[0]);
@@ -72,4 +71,5 @@ const init = function() {
         main(fileName);
     }
 }
+
 init();
