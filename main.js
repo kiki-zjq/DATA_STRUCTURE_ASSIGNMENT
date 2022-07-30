@@ -19,14 +19,19 @@ const main = function(fileName) {
         }
         // Calculate the total time can be covered if we can hire all safeguards.
         let sum = data[0][1] - data[0][0];
+        let curMax = data[0][1];
+        let prevMax;
         for (let i = 1; i < data.length; i++) {
+            if (data[i][1] <= curMax) {
+                continue;
+            }
+            prevMax = curMax;
+            curMax = data[i][1];
             sum += data[i][1] - data[i][0];
-            if (data[i][0] < data[i -1][1]) {
-                sum -= data[i - 1][1] - data[i][0]; 
+            if (data[i][0] < prevMax) {
+                sum -= prevMax - data[i][0]; 
             }
         }
-    
-        // Reduce the minimum contribute
         outputFile(fileName, sum - contri);
     })
 }
@@ -60,7 +65,7 @@ const outputFile = function(fileName, value) {
         if (err) {
             console.log('Something went wrong when output file', err);
         } else {
-            console.log(`Output file: ${outputName} success!`);
+            console.log(`Output file: ${outputName} success! Result value is: ${value}`);
         }
     });
 }
